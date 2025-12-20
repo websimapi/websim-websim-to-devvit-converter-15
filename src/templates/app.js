@@ -221,15 +221,15 @@ export default defineConfig({
   },
   build: {
     emptyOutDir: false,
-    ssr: "index.ts",
-    outDir: "../dist/server",
+    ssr: "main.ts",
+    outDir: "../dist",
     target: "node22",
     sourcemap: true,
     rollupOptions: {
       external: [...builtinModules],
       output: {
         format: "cjs",
-        entryFileNames: "index.cjs",
+        entryFileNames: "main.cjs",
         inlineDynamicImports: true,
       },
     },

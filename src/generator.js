@@ -21,8 +21,7 @@ import {
     websimToDevvitPolyfill,
     generateServerIndexTs,
     generateServerPostTs,
-    generateServerViteConfig,
-    generateServerTsConfig
+    generateServerViteConfig
 } from './templates.js';
 
 export async function generateDevvitZip(projectMeta, assets, includeReadme = true) {
@@ -130,13 +129,12 @@ export async function generateDevvitZip(projectMeta, assets, includeReadme = tru
         clientFolder.file("remotion_bridge.js", `export * from 'remotion';\nexport { Player } from '@remotion/player';`);
     }
 
-    // 4. Server Folder (Express App)
-    const serverFolder = zip.folder("server");
-    serverFolder.file("index.ts", generateServerIndexTs());
-    serverFolder.file("vite.config.ts", generateServerViteConfig());
-    serverFolder.file("tsconfig.json", generateServerTsConfig());
+    // 4. Source Folder (Devvit Server Code)
+    const srcFolder = zip.folder("src");
+    srcFolder.file("main.ts", generateServerIndexTs());
+    srcFolder.file("vite.config.ts", generateServerViteConfig());
 
-    const coreFolder = serverFolder.folder("core");
+    const coreFolder = srcFolder.folder("core");
     coreFolder.file("post.ts", generateServerPostTs(projectTitle));
 
     // 5. Shared Folder (Types)
