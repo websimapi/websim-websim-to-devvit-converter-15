@@ -34,7 +34,7 @@ export const generatePackageJson = (slug, dependencies = {}, devDependencies = {
 export const generateDevvitYaml = (slug) => `name: "${slug}"
 version: 0.1.0
 webroot: webroot
-main: src/server/main.ts
+main: main.ts
 permissions:
   - redis
   - realtime

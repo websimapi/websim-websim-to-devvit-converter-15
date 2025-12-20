@@ -86,6 +86,9 @@ export async function generateDevvitZip(projectMeta, assets, includeReadme = tru
     // Root TSConfig (Generic)
     zip.file("tsconfig.json", tsConfig);
 
+    // Root Devvit entrypoint that forwards to our server main
+    zip.file("main.ts", `export { default } from "./src/server/main.ts";\n`);
+
     if (includeReadme) {
         const baseReadme = generateReadme(projectTitle, `https://websim.ai/p/${projectMeta.project.id}`);
         const migrationNotes = websimDetector.generateMigrationNotes();
