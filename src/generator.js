@@ -95,9 +95,13 @@ export async function generateDevvitZip(projectMeta, assets, includeReadme = tru
     zip.file("scripts/setup.mjs", setupScript);
     zip.file("scripts/validate.mjs", validateScript);
 
-    // 3. Client Folder (WebSim Assets + Config)
-    const clientFolder = zip.folder("client");
-    
+    // 3. Project Structure
+    const srcFolder = zip.folder("src");
+    const clientFolder = srcFolder.folder("client");
+    const serverFolder = srcFolder.folder("server");
+    const sharedFolder = srcFolder.folder("shared");
+
+    // --- Client Setup (src/client) ---
     // Client Vite Config
     clientFolder.file("vite.config.mjs", generateViteConfig({ hasReact, hasRemotion }));
 
@@ -105,7 +109,7 @@ export async function generateDevvitZip(projectMeta, assets, includeReadme = tru
         clientFolder.file(path, content);
     }
 
-    // Default Assets for Devvit Splash (1x1 Transparent PNG)
+    // Default Assets
     const emptyPng = new Uint8Array([
         0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 0x49, 0x48, 0x44, 0x52,
         0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01, 0x08, 0x06, 0x00, 0x00, 0x00, 0x1f, 0x15, 0xc4,
@@ -122,24 +126,19 @@ export async function generateDevvitZip(projectMeta, assets, includeReadme = tru
     clientFolder.file("websim_stubs.js", websimStubsJs);
     clientFolder.file("websim_package.js", websimPackageJs);
     clientFolder.file("jsx-dev-proxy.js", jsxDevProxy);
-    clientFolder.file("devvit-client.js", websimToDevvitPolyfill); // Fetch-based bridge
+    clientFolder.file("devvit-client.js", websimToDevvitPolyfill);
 
     if (hasRemotion) {
         clientFolder.file("remotion_bridge.js", `export * from 'remotion';\nexport { Player } from '@remotion/player';`);
     }
 
-    // 4. Server Folder (renamed to src for standard Devvit structure)
-    const srcFolder = zip.folder("src");
-    srcFolder.file("main.ts", generateServerIndexTs());
-    
-    // Note: No Vite config for server anymore, Devvit CLI handles src/main.ts directly.
-
-    const coreFolder = srcFolder.folder("core");
+    // --- Server Setup (src/server) ---
+    serverFolder.file("main.ts", generateServerIndexTs());
+    const coreFolder = serverFolder.folder("core");
     coreFolder.file("post.ts", generateServerPostTs(projectTitle));
 
-    // 5. Shared Folder (Types)
-    const sharedFolder = zip.folder("shared").folder("types");
-    sharedFolder.file("api.ts", "export type ApiRequest = { method: string };"); // Placeholder
+    // --- Shared Setup (src/shared) ---
+    sharedFolder.file("types.ts", "export type ApiRequest = { method: string };");
 
     const blob = await zip.generateAsync({ type: "blob" });
     return { blob, filename: `${projectSlug}-devvit.zip` };

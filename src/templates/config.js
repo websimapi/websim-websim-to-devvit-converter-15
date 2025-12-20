@@ -2,11 +2,11 @@ export const generatePackageJson = (slug, dependencies = {}, devDependencies = {
   "name": slug,
   "version": "0.1.0",
   "private": true,
-  "main": "src/main.ts",
+  "main": "src/server/main.ts",
   "scripts": {
     "dev": "npm run build && devvit playtest",
     "build": "npm run build:client",
-    "build:client": "vite build --config client/vite.config.mjs",
+    "build:client": "vite build --config src/client/vite.config.mjs",
     "setup": "node scripts/setup.mjs", 
     "register": "devvit upload",
     "upload": "npm run build && devvit upload",
@@ -34,7 +34,7 @@ export const generatePackageJson = (slug, dependencies = {}, devDependencies = {
 export const generateDevvitYaml = (slug) => `name: "${slug}"
 version: 0.1.0
 webroot: webroot
-main: src/main.ts
+main: src/server/main.ts
 permissions:
   - redis
   - realtime
@@ -79,7 +79,7 @@ export default defineConfig({
   },
   assetsInclude: ['**/*.mp3', '**/*.wav', '**/*.ogg', '**/*.glb', '**/*.gltf', '**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif'],
   build: {
-    outDir: '../webroot',
+    outDir: '../../webroot',
     emptyOutDir: true,
     target: 'es2020',
     minify: 'esbuild',
@@ -119,11 +119,13 @@ export const tsConfig = JSON.stringify({
     "skipLibCheck": true
   },
   "include": [
-    "src"
+    "src/server",
+    "src/shared"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "src/client"
   ]
 }, null, 2);
 
