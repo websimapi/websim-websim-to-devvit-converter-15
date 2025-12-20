@@ -161,7 +161,26 @@ btnProcessZip.addEventListener('click', async () => {
         
         await Promise.all(promises);
         
-        uploadedAssets = assets;
+        // Handle nested root folders (common in zips)
+        // If index.html is nested (e.g. "Game/index.html"), and all files share that prefix, strip it.
+        const paths = Object.keys(assets);
+        const indexFile = paths.find(p => p.endsWith('index.html') || p.endsWith('index.htm'));
+        
+        if (indexFile && indexFile.includes('/')) {
+            const prefix = indexFile.substring(0, indexFile.lastIndexOf('/') + 1);
+            if (paths.every(p => p.startsWith(prefix))) {
+                console.log('Stripping common prefix:', prefix);
+                const strippedAssets = {};
+                for (const p of paths) {
+                    strippedAssets[p.substring(prefix.length)] = assets[p];
+                }
+                uploadedAssets = strippedAssets;
+            } else {
+                uploadedAssets = assets;
+            }
+        } else {
+            uploadedAssets = assets;
+        }
         
         // Create dummy metadata for the UI and generator
         currentProjectMeta = {

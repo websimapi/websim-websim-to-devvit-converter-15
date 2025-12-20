@@ -42,10 +42,14 @@ permissions:
 export const generateViteConfig = ({ hasReact = false, hasRemotion = false } = {}) => `
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   mode: 'production',
-  root: '.', // Config is inside client/
+  root: __dirname, // Ensure root is set to client/ directory
   base: './',
   plugins: [
     ${hasReact ? `react({

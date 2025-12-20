@@ -182,15 +182,20 @@ export const createPost = async () => {
 
 export const generateServerViteConfig = () => `import { defineConfig } from "vite";
 import { builtinModules } from "node:module";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  root: __dirname,
   ssr: {
     noExternal: true,
   },
   build: {
     emptyOutDir: false,
     ssr: "index.ts",
-    outDir: "../../dist/server",
+    outDir: "../dist/server",
     target: "node22",
     sourcemap: true,
     rollupOptions: {
