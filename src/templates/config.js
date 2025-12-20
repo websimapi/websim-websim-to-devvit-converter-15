@@ -3,6 +3,7 @@ export const generatePackageJson = (slug, dependencies = {}, devDependencies = {
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "main": "dist/server/index.cjs",
   "scripts": {
     "dev": "devvit playtest",
     "build": "npm run build:client && npm run build:server",
@@ -15,6 +16,7 @@ export const generatePackageJson = (slug, dependencies = {}, devDependencies = {
   },
   "dependencies": {
     "@devvit/web": "latest",
+    "@devvit/public-api": "latest",
     "express": "^4.18.2",
     ...dependencies
   },
@@ -32,6 +34,7 @@ export const generatePackageJson = (slug, dependencies = {}, devDependencies = {
 export const generateDevvitYaml = (slug) => `name: ${slug}
 version: 0.1.0
 webroot: webroot
+main: dist/server/index.cjs
 permissions:
   - redis
   - realtime

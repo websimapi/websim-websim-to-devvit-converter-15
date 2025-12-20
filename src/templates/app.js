@@ -1,4 +1,5 @@
-export const generateServerIndexTs = () => `import express from "express";
+export const generateServerIndexTs = () => `import { Devvit } from "@devvit/public-api";
+import express from "express";
 import {
     createServer,
     context,
@@ -6,6 +7,7 @@ import {
     reddit,
     redis,
 } from "@devvit/web/server";
+import { createPost } from "./core/post";
 
 const app = express();
 
@@ -151,12 +153,37 @@ app.use(router);
 
 const server = createServer(app);
 server.listen(getServerPort());
+
+Devvit.configure({
+    redditAPI: true,
+    http: true,
+    menu: [
+        {
+            label: "Create Game Post",
+            location: "subreddit",
+            forUserType: "moderator",
+            onPress: async (_event, context) => {
+                const { ui } = context;
+                try {
+                    await createPost(context);
+                    ui.showToast("Game post created!");
+                } catch(e) {
+                    console.error(e);
+                    ui.showToast("Error creating post: " + e.message);
+                }
+            }
+        }
+    ]
+});
+
+export default Devvit;
 `;
 
-export const generateServerPostTs = (title) => `import { context, reddit } from "@devvit/web/server";
-
-export const createPost = async () => {
-  const { subredditName } = context;
+export const generateServerPostTs = (title) => `
+export const createPost = async (context) => {
+  const { reddit } = context;
+  const subredditName = context.subredditName || (await reddit.getCurrentSubreddit()).name;
+  
   if (!subredditName) {
     throw new Error("subredditName is required");
   }
