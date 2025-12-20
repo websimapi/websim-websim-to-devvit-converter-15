@@ -109,10 +109,11 @@ export default defineConfig({
 
 export const tsConfig = JSON.stringify({
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "lib": ["ES2022"],
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "lib": ["ES2020"],
+    "outDir": "dist",
     "types": ["node"],
     "esModuleInterop": true,
     "strict": true,
