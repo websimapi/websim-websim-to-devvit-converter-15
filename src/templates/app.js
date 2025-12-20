@@ -2,7 +2,6 @@ export const generateServerIndexTs = () => `import { Devvit } from "@devvit/publ
 import express from "express";
 import {
     createServer,
-    context,
     getServerPort,
     reddit,
     redis,
@@ -224,13 +223,12 @@ export default defineConfig({
     ssr: "main.ts",
     outDir: "../dist",
     target: "node22",
-    sourcemap: true,
+    sourcemap: false,
     rollupOptions: {
+      // Bundle @devvit/web to avoid CLI resolution issues with panic files
       external: [
         ...builtinModules, 
-        '@devvit/public-api', 
-        '@devvit/web', 
-        '@devvit/web/server'
+        '@devvit/public-api'
       ],
       output: {
         format: "cjs",
