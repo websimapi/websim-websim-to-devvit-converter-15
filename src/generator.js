@@ -129,12 +129,13 @@ export async function generateDevvitZip(projectMeta, assets, includeReadme = tru
         clientFolder.file("remotion_bridge.js", `export * from 'remotion';\nexport { Player } from '@remotion/player';`);
     }
 
-    // 4. Source Folder (Devvit Server Code)
-    const srcFolder = zip.folder("src");
-    srcFolder.file("main.ts", generateServerIndexTs());
-    srcFolder.file("vite.config.ts", generateServerViteConfig());
+    // 4. Server Folder (Devvit Server Code - Express)
+    // We use "server" instead of "src" to prevent Devvit CLI from trying to bundle it as client blocks
+    const serverFolder = zip.folder("server");
+    serverFolder.file("index.ts", generateServerIndexTs());
+    serverFolder.file("vite.config.ts", generateServerViteConfig());
 
-    const coreFolder = srcFolder.folder("core");
+    const coreFolder = serverFolder.folder("core");
     coreFolder.file("post.ts", generateServerPostTs(projectTitle));
 
     // 5. Shared Folder (Types)

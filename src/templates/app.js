@@ -220,7 +220,7 @@ export default defineConfig({
   },
   build: {
     emptyOutDir: false,
-    ssr: "main.ts",
+    ssr: "index.ts",
     outDir: "../dist",
     target: "node22",
     sourcemap: false,
@@ -232,7 +232,7 @@ export default defineConfig({
       ],
       output: {
         format: "cjs",
-        entryFileNames: "main.cjs",
+        entryFileNames: "server.cjs",
         inlineDynamicImports: true,
       },
     },

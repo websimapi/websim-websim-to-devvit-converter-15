@@ -3,12 +3,12 @@ export const generatePackageJson = (slug, dependencies = {}, devDependencies = {
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "main": "dist/main.cjs",
+  "main": "dist/server.cjs",
   "scripts": {
     "dev": "devvit playtest",
     "build": "npm run build:client && npm run build:server",
     "build:client": "vite build --config client/vite.config.js",
-    "build:server": "vite build --config src/vite.config.ts",
+    "build:server": "vite build --config server/vite.config.ts",
     "setup": "node scripts/setup.js", 
     "register": "devvit upload",
     "upload": "devvit upload",
@@ -34,7 +34,7 @@ export const generatePackageJson = (slug, dependencies = {}, devDependencies = {
 export const generateDevvitYaml = (slug) => `name: ${slug}
 version: 0.1.0
 webroot: webroot
-main: dist/main.cjs
+main: dist/server.cjs
 permissions:
   - redis
   - realtime
@@ -120,7 +120,7 @@ export const tsConfig = JSON.stringify({
     "skipLibCheck": true
   },
   "include": [
-    "src"
+    "server"
   ],
   "exclude": [
     "node_modules",
