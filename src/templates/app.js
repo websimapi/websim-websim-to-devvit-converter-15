@@ -226,7 +226,12 @@ export default defineConfig({
     target: "node22",
     sourcemap: true,
     rollupOptions: {
-      external: [...builtinModules],
+      external: [
+        ...builtinModules, 
+        '@devvit/public-api', 
+        '@devvit/web', 
+        '@devvit/web/server'
+      ],
       output: {
         format: "cjs",
         entryFileNames: "main.cjs",
