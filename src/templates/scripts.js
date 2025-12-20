@@ -170,8 +170,8 @@ try {
     console.warn('   If the build fails, try running "npm install" manually.');
 }
 
-// 3. Build Project (Client & Server)
-console.log('🔨 Building Game Client & Server...');
+// 3. Build Project (Client Only)
+console.log('🔨 Building Game Client...');
 try {
     execSync('npm run build', { stdio: 'inherit' });
 } catch(e) {

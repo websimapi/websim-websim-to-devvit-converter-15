@@ -20,8 +20,7 @@ import {
     generateReadme,
     websimToDevvitPolyfill,
     generateServerIndexTs,
-    generateServerPostTs,
-    generateServerViteConfig
+    generateServerPostTs
 } from './templates.js';
 
 export async function generateDevvitZip(projectMeta, assets, includeReadme = true) {
@@ -132,7 +131,8 @@ export async function generateDevvitZip(projectMeta, assets, includeReadme = tru
     // 4. Server Folder (renamed to src for standard Devvit structure)
     const srcFolder = zip.folder("src");
     srcFolder.file("main.ts", generateServerIndexTs());
-    srcFolder.file("vite.config.ts", generateServerViteConfig());
+    
+    // Note: No Vite config for server anymore, Devvit CLI handles src/main.ts directly.
 
     const coreFolder = srcFolder.folder("core");
     coreFolder.file("post.ts", generateServerPostTs(projectTitle));

@@ -206,39 +206,7 @@ export const createPost = async (context) => {
 };
 `;
 
-export const generateServerViteConfig = () => `import { defineConfig } from "vite";
-import { builtinModules } from "node:module";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-export default defineConfig({
-  root: __dirname,
-  ssr: {
-    noExternal: true,
-  },
-  build: {
-    emptyOutDir: false,
-    ssr: "main.ts",
-    outDir: "../dist",
-    target: "node22",
-    sourcemap: false,
-    rollupOptions: {
-      // Bundle @devvit/web to avoid CLI resolution issues with panic files
-      external: [
-        ...builtinModules, 
-        '@devvit/public-api'
-      ],
-      output: {
-        format: "cjs",
-        entryFileNames: "main.cjs",
-        inlineDynamicImports: true,
-      },
-    },
-  },
-});
-`;
 
 export const generateServerTsConfig = () => JSON.stringify({
   "compilerOptions": {
