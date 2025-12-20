@@ -22,7 +22,7 @@ Converted from WebSim: ${url}
 - **Webroot**: The \`webroot/\` directory contains the game files. These are served inside a webview in the Reddit app.
 - **Server**: The \`src/\` directory contains the Devvit App logic (Express server).
 - **Logging**: Console logs from the game are piped to your terminal. Look for lines starting with \`[Web]\`.
-- **Validation**: The \`npm run setup\` command runs \`scripts/validate.js\` to check for common issues (CSP violations, missing files).
+- **Validation**: The \`npm run setup\` command runs \`scripts/validate.mjs\` to check for common issues (CSP violations, missing files).
 
 ## Troubleshooting
 

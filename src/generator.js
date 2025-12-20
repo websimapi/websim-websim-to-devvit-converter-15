@@ -92,14 +92,14 @@ export async function generateDevvitZip(projectMeta, assets, includeReadme = tru
         zip.file("README.md", baseReadme + '\n\n' + migrationNotes);
     }
 
-    zip.file("scripts/setup.js", setupScript);
-    zip.file("scripts/validate.js", validateScript);
+    zip.file("scripts/setup.mjs", setupScript);
+    zip.file("scripts/validate.mjs", validateScript);
 
     // 3. Client Folder (WebSim Assets + Config)
     const clientFolder = zip.folder("client");
     
     // Client Vite Config
-    clientFolder.file("vite.config.js", generateViteConfig({ hasReact, hasRemotion }));
+    clientFolder.file("vite.config.mjs", generateViteConfig({ hasReact, hasRemotion }));
 
     for (const [path, content] of Object.entries(clientFiles)) {
         clientFolder.file(path, content);

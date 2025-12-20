@@ -7,6 +7,8 @@ import {
     redis,
 } from "@devvit/web/server";
 import { createPost } from "./core/post";
+// Ensure explicit import from public API for types if needed
+import { Devvit } from "@devvit/public-api";
 
 const app = express();
 

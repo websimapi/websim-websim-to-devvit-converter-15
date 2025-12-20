@@ -182,7 +182,7 @@ try {
 // 4. Validation
 console.log('🧐 Validating assets...');
 try {
-    execSync('node scripts/validate.js', { stdio: 'inherit' });
+    execSync('node scripts/validate.mjs', { stdio: 'inherit' });
 } catch(e) {
     console.warn('⚠️ Validation found issues.');
 }

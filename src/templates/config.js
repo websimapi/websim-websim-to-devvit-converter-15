@@ -2,20 +2,21 @@ export const generatePackageJson = (slug, dependencies = {}, devDependencies = {
   "name": slug,
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "main": "src/main.ts",
   "scripts": {
     "dev": "npm run build && devvit playtest",
     "build": "npm run build:client",
-    "build:client": "vite build --config client/vite.config.js",
-    "setup": "node scripts/setup.js", 
+    "build:client": "vite build --config client/vite.config.mjs",
+    "setup": "node scripts/setup.mjs", 
     "register": "devvit upload",
     "upload": "npm run build && devvit upload",
-    "validate": "node scripts/validate.js"
+    "validate": "node scripts/validate.mjs"
   },
   "dependencies": {
     "@devvit/web": "latest",
     "@devvit/public-api": "latest",
+    "@devvit/reddit": "latest",
+    "@devvit/redis": "latest",
     "express": "^4.18.2",
     ...dependencies
   },
@@ -113,7 +114,6 @@ export const tsConfig = JSON.stringify({
     "moduleResolution": "NodeNext",
     "lib": ["ES2022"],
     "types": ["node"],
-    "jsx": "react-jsx",
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true
