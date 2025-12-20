@@ -2,7 +2,7 @@ export const generatePackageJson = (slug, dependencies = {}, devDependencies = {
   "name": slug,
   "version": "0.1.0",
   "private": true,
-  "main": "src/server/main.ts",
+  "main": "src/main.ts",
   "scripts": {
     "dev": "npm run build && devvit playtest",
     "build": "npm run build:client",
@@ -34,7 +34,7 @@ export const generatePackageJson = (slug, dependencies = {}, devDependencies = {
 export const generateDevvitYaml = (slug) => `name: "${slug}"
 version: 0.1.0
 webroot: webroot
-main: src/server/main.ts
+main: src/main.ts
 permissions:
   - redis
   - realtime
@@ -119,8 +119,7 @@ export const tsConfig = JSON.stringify({
     "skipLibCheck": true
   },
   "include": [
-    "src/server",
-    "src/shared"
+    "src"
   ],
   "exclude": [
     "node_modules",

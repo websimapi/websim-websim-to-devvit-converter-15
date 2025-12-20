@@ -216,7 +216,7 @@ export const generateServerTsConfig = () => JSON.stringify({
     "lib": ["ES2023"],
     "types": ["node"],
     "rootDir": ".",
-    "outDir": "../../dist/types/server",
+    "outDir": "../dist/types/server",
     "esModuleInterop": true,
     "strict": true
   },

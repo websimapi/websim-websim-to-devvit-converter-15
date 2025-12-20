@@ -86,8 +86,7 @@ export async function generateDevvitZip(projectMeta, assets, includeReadme = tru
     // Root TSConfig (Generic)
     zip.file("tsconfig.json", tsConfig);
 
-    // Root Devvit entrypoint that forwards to our server main
-    zip.file("main.ts", `export { default } from "./src/server/main.ts";\n`);
+    // Root Devvit entrypoint removed - we use src/main.ts directly
 
     if (includeReadme) {
         const baseReadme = generateReadme(projectTitle, `https://websim.ai/p/${projectMeta.project.id}`);
@@ -101,7 +100,7 @@ export async function generateDevvitZip(projectMeta, assets, includeReadme = tru
     // 3. Project Structure
     const srcFolder = zip.folder("src");
     const clientFolder = srcFolder.folder("client");
-    const serverFolder = srcFolder.folder("server");
+    // const serverFolder = srcFolder.folder("server"); // Removed, we put main.ts in src/
     const sharedFolder = srcFolder.folder("shared");
 
     // --- Client Setup (src/client) ---
@@ -135,9 +134,9 @@ export async function generateDevvitZip(projectMeta, assets, includeReadme = tru
         clientFolder.file("remotion_bridge.js", `export * from 'remotion';\nexport { Player } from '@remotion/player';`);
     }
 
-    // --- Server Setup (src/server) ---
-    serverFolder.file("main.ts", generateServerIndexTs());
-    const coreFolder = serverFolder.folder("core");
+    // --- Server Setup (src/) ---
+    srcFolder.file("main.ts", generateServerIndexTs());
+    const coreFolder = srcFolder.folder("core");
     coreFolder.file("post.ts", generateServerPostTs(projectTitle));
 
     // --- Shared Setup (src/shared) ---
